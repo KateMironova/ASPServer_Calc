@@ -1,0 +1,35 @@
+a<input type="text" id="A" ><p>
+b<input type="text" id="B" value=""><p>
+op<input type="text" id="Op" value=""><p>
+=<input type="text" id="Res" value=""><p>
+<input type="button" id="Btn" onclick="res()" value="Calc"><p>
+
+<script>
+function res()
+{
+    try
+	{
+		var a = parseInt(document.getElementById("A").value);
+		var b = parseInt(document.getElementById("B").value);
+		var op = document.getElementById("Op").value;
+		var res = calcN(a, b, op);	
+		document.getElementById("Res").value = res;
+    }
+    catch (ArgumentOutOfRangeException)
+    {
+        Exception();
+    }
+}
+function calcN(a, b, op) 
+{
+	if (op == '+')
+		op = 'plus';
+	var rr = new XMLHttpRequest();
+	var req = "a=" + a + "&b=" + b + "&op=" + op;
+	rr.open('POST', 'http://localhost:50216/Server.asmx/Calculate', false);
+	rr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	rr.send(req);
+	return rr.responseText;
+
+}
+</script>
